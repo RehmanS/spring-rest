@@ -4,6 +4,7 @@ import com.spring.rest.springrest.enums.ErrorCodeEnum;
 import com.spring.rest.springrest.exception.CustomException;
 import com.spring.rest.springrest.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -52,6 +53,16 @@ public class ExceptionHandlerController {
         return ErrorResponse.builder()
                 .code(ErrorCodeEnum.UNKNOWN_ERROR.getCode())
                 .message(ErrorCodeEnum.UNKNOWN_ERROR.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public  ErrorResponse accessDenied(AccessDeniedException e){
+
+        return ErrorResponse.builder()
+                .code(ErrorCodeEnum.ACCESS_DENIED.getCode())
+                .message(ErrorCodeEnum.ACCESS_DENIED.getMessage())
                 .build();
     }
 }

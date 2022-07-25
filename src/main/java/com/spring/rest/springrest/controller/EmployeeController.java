@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -19,7 +20,7 @@ public class EmployeeController {
 
     private final EmployeeService employeeService;
 
-    @GetMapping()
+    @GetMapping("/allEmployees")
     @Operation(summary = "Get All Employees") // swagger
     public EmployeeResponse getAllEmployees() {
         return employeeService.getAllEmployees();
@@ -45,12 +46,16 @@ public class EmployeeController {
         employeeService.insert(employeeDto);
     }
 
+
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')") // Method security
     public void update(@RequestBody EmployeeDto employeeDto, @PathVariable("id") int id){
         employeeService.update(employeeDto,id);
     }
 
+
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')") // Method security
     public void updateSome(@RequestBody EmployeeDto employeeDto, @PathVariable("id") int id){
         employeeService.updateSome(employeeDto,id);
     }

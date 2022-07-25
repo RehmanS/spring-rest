@@ -4,7 +4,8 @@ package com.spring.rest.springrest.enums;
 public enum ErrorCodeEnum {
     EMPLOYEE_NOT_FOUND(1001,"Can not find employee with given id"),
     VALIDATION_ERROR(1002," is not valid"),
-    UNKNOWN_ERROR(1000,"Unknown error");
+    UNKNOWN_ERROR(1000,"Unknown error"),
+    ACCESS_DENIED(1003,"Access is denied");
 
     private final int code;
     private final String message;
